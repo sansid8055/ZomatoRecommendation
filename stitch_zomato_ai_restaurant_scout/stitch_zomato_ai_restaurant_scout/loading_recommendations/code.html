@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Zomato AI - Finding Recommendations</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-fixed-dim": "#c0c1ff",
+                    "on-primary-container": "#fffbff",
+                    "tertiary-fixed": "#8ef4eb",
+                    "primary-fixed-dim": "#ffb3b1",
+                    "error-container": "#ffdad6",
+                    "outline-variant": "#e4bebc",
+                    "secondary-container": "#6063ee",
+                    "on-tertiary-container": "#f3fffd",
+                    "on-surface-variant": "#5b403f",
+                    "outline": "#8f6f6e",
+                    "surface": "#fcf9f8",
+                    "on-tertiary-fixed-variant": "#00504c",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container-high": "#eae7e7",
+                    "on-tertiary": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "inverse-surface": "#313030",
+                    "on-primary-fixed": "#410007",
+                    "on-secondary-container": "#fffbff",
+                    "primary-fixed": "#ffdad8",
+                    "on-secondary": "#ffffff",
+                    "primary": "#b7122a",
+                    "on-secondary-fixed": "#07006c",
+                    "on-tertiary-fixed": "#00201e",
+                    "on-secondary-fixed-variant": "#2f2ebe",
+                    "surface-container-highest": "#e5e2e1",
+                    "error": "#ba1a1a",
+                    "on-background": "#1b1b1b",
+                    "surface-variant": "#e5e2e1",
+                    "primary-container": "#db313f",
+                    "tertiary-fixed-dim": "#71d7cf",
+                    "secondary-fixed": "#e1e0ff",
+                    "on-primary-fixed-variant": "#92001c",
+                    "secondary": "#4648d4",
+                    "inverse-primary": "#ffb3b1",
+                    "surface-container": "#f0eded",
+                    "on-primary": "#ffffff",
+                    "surface-bright": "#fcf9f8",
+                    "surface-tint": "#bb162c",
+                    "surface-container-low": "#f6f3f2",
+                    "inverse-on-surface": "#f3f0ef",
+                    "on-error": "#ffffff",
+                    "surface-dim": "#dcd9d9",
+                    "tertiary": "#006762",
+                    "tertiary-container": "#00837c",
+                    "on-surface": "#1b1b1b",
+                    "background": "#fcf9f8"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "xl": "32px",
+                    "xs": "4px",
+                    "margin-mobile": "16px",
+                    "max-width": "1280px",
+                    "gutter": "24px",
+                    "sm": "8px",
+                    "lg": "24px",
+                    "md": "16px",
+                    "base": "8px",
+                    "margin-desktop": "48px"
+            },
+            "fontFamily": {
+                    "headline-lg": ["DM Sans"],
+                    "display-lg": ["DM Sans"],
+                    "label-md": ["Inter"],
+                    "headline-md": ["DM Sans"],
+                    "body-sm": ["Inter"],
+                    "headline-sm": ["DM Sans"],
+                    "body-lg": ["Inter"],
+                    "label-lg": ["Inter"],
+                    "body-md": ["Inter"],
+                    "headline-lg-mobile": ["DM Sans"]
+            },
+            "fontSize": {
+                    "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-md": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                    "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                    "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                    "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["28px", {"lineHeight": "34px", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        @keyframes shimmer {
+            0% { background-position: -1000px 0; }
+            100% { background-position: 1000px 0; }
+        }
+        .animate-shimmer {
+            background: linear-gradient(90deg, #f0eded 0%, #fcf9f8 50%, #f0eded 100%);
+            background-size: 1000px 100%;
+            animation: shimmer 2s infinite linear;
+        }
+        
+        @keyframes pulse-ring {
+            0% { transform: scale(.33); }
+            80%, 100% { opacity: 0; }
+        }
+        .ai-pulse::before {
+            content: '';
+            position: absolute;
+            width: 300%;
+            height: 300%;
+            background-color: rgba(183, 18, 42, 0.1);
+            border-radius: 45px;
+            animation: pulse-ring 1.25s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+        }
+
+        .floating-food {
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-surface text-on-surface font-body-md overflow-hidden">
+<!-- TopAppBar -->
+<header class="fixed top-0 left-0 w-full z-50 flex justify-between items-center px-margin-mobile h-16 bg-surface shadow-sm">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary" data-icon="restaurant">restaurant</span>
+<span class="text-headline-sm font-headline-sm font-bold text-primary">Zomato AI</span>
+</div>
+<div class="w-8 h-8 rounded-full bg-surface-container-high overflow-hidden border border-outline-variant">
+<img alt="User profile avatar" class="w-full h-full object-cover" data-alt="A professional high-quality close-up portrait of a friendly man in his early 30s with a clean-cut appearance. The lighting is soft and flattering, coming from the side to create gentle depth. He is set against a clean, neutral studio background that matches a sophisticated modern UI aesthetic. The overall mood is approachable, trustworthy, and high-end corporate." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAv4fqdEylBkh-_Ypfv9nsxQ1t2dZjbjvu1XZZeL3zeiFHr8zkEZrcLyNytmX9Z3Hf9zWyDccR8abotHSuxa22bBueOTjJ-a3LJ38hkufJqhap3gHm5_RlWrl-GVLFSo4hQ03qI0rJDqHCFKH0YSsBa1NdntnMN3H79cWMQH8eFctZRzWfDPdtI7FtPVvEHjRY28SP1cegwqFNxPxuhG6bI-hcJ7U0re1HV-KgfKWlJs5qDQbEt5GQJV-bgXBNrdFVTdMbpBBAmV6Ce"/>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="relative pt-16 h-screen flex flex-col items-center justify-center px-margin-mobile overflow-hidden">
+<!-- Subtle Background Pattern (Skeleton Preview) -->
+<div class="absolute inset-0 z-0 opacity-40 pointer-events-none p-margin-desktop">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-gutter mt-16">
+<!-- Skeleton Card 1 -->
+<div class="rounded-xl bg-surface-container overflow-hidden h-64 border border-outline-variant/30">
+<div class="h-32 animate-shimmer"></div>
+<div class="p-md space-y-3">
+<div class="h-4 w-3/4 rounded bg-surface-dim animate-shimmer"></div>
+<div class="h-3 w-1/2 rounded bg-surface-dim animate-shimmer"></div>
+</div>
+</div>
+<!-- Skeleton Card 2 -->
+<div class="hidden md:block rounded-xl bg-surface-container overflow-hidden h-64 border border-outline-variant/30">
+<div class="h-32 animate-shimmer"></div>
+<div class="p-md space-y-3">
+<div class="h-4 w-3/4 rounded bg-surface-dim animate-shimmer"></div>
+<div class="h-3 w-1/2 rounded bg-surface-dim animate-shimmer"></div>
+</div>
+</div>
+<!-- Skeleton Card 3 -->
+<div class="hidden md:block rounded-xl bg-surface-container overflow-hidden h-64 border border-outline-variant/30">
+<div class="h-32 animate-shimmer"></div>
+<div class="p-md space-y-3">
+<div class="h-4 w-3/4 rounded bg-surface-dim animate-shimmer"></div>
+<div class="h-3 w-1/2 rounded bg-surface-dim animate-shimmer"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Central Loading Logic -->
+<div class="relative z-10 flex flex-col items-center max-w-md text-center">
+<!-- Animated Spinner / AI Food Theme -->
+<div class="relative w-24 h-24 mb-xl flex items-center justify-center">
+<div class="ai-pulse absolute inset-0 flex items-center justify-center"></div>
+<div class="relative bg-surface rounded-full p-4 shadow-lg border border-primary/20 floating-food">
+<span class="material-symbols-outlined text-primary text-[48px] transition-all duration-500" data-icon="restaurant" id="spinner-icon">restaurant</span>
+</div>
+<!-- Orbiting Food Icons -->
+<div class="absolute w-full h-full animate-[spin_8s_linear_infinite]">
+<span class="material-symbols-outlined absolute -top-4 left-1/2 -translate-x-1/2 text-tertiary-container text-xl" data-icon="ramen_dining">ramen_dining</span>
+<span class="material-symbols-outlined absolute -bottom-4 left-1/2 -translate-x-1/2 text-secondary text-xl" data-icon="pizza">local_pizza</span>
+<span class="material-symbols-outlined absolute top-1/2 -left-4 -translate-y-1/2 text-primary-container text-xl" data-icon="bakery_dining">bakery_dining</span>
+<span class="material-symbols-outlined absolute top-1/2 -right-4 -translate-y-1/2 text-on-tertiary-fixed-variant text-xl" data-icon="icecream">icecream</span>
+</div>
+</div>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-on-background mb-base">Finding recommendations...</h1>
+<p class="font-body-md text-body-md text-on-surface-variant max-w-[280px]">Our AI is curating the best dining experiences for you. (may take 5-15 seconds)</p>
+<!-- Subtle Progress Bar -->
+<div class="w-full h-1 bg-surface-container-highest rounded-full mt-xl overflow-hidden">
+<div class="h-full bg-primary transition-all duration-300 ease-out" id="progress-bar" style="width: 0%"></div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar (Suppressed as per "focused journey" rule, but following skeleton layout) -->
+<!-- The user is in a loading state which is transactional/transient. Nav is excluded to prioritize the focus. -->
+<script>
+        // Micro-interactions for the loading state
+        const icons = ["restaurant", "local_pizza", "ramen_dining", "icecream", "bakery_dining", "coffee", "lunch_dining"];
+        const iconElement = document.getElementById('spinner-icon');
+        const progressBar = document.getElementById('progress-bar');
+        
+        let iconIndex = 0;
+        let progress = 0;
+
+        // Change the central icon periodically
+        setInterval(() => {
+            iconIndex = (iconIndex + 1) % icons.length;
+            iconElement.style.opacity = '0';
+            setTimeout(() => {
+                iconElement.innerText = icons[iconIndex];
+                iconElement.style.opacity = '1';
+            }, 250);
+        }, 1500);
+
+        // Simulate progress bar movement
+        const interval = setInterval(() => {
+            if (progress >= 95) {
+                // Hold at 95% until "finished"
+                progress = 95;
+            } else {
+                // Randomly increment to feel more "real"
+                progress += Math.random() * 8;
+            }
+            progressBar.style.width = `${progress}%`;
+        }, 800);
+
+        // Mock completion after 12 seconds
+        setTimeout(() => {
+            progressBar.style.width = '100%';
+            // In a real app, this would trigger the content injection
+        }, 12000);
+    </script>
+</body></html>

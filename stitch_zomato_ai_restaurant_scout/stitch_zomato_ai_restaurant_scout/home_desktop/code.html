@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .custom-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: #b7122a;
+            cursor: pointer;
+            border-radius: 50%;
+            border: 2px solid white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        .gradient-ai-border {
+            position: relative;
+            background: white;
+            border-radius: 1rem;
+        }
+        .gradient-ai-border::before {
+            content: "";
+            position: absolute;
+            top: -2px; left: -2px; right: -2px; bottom: -2px;
+            background: linear-gradient(45deg, #b7122a, #4648d4, #b7122a);
+            border-radius: 1.1rem;
+            z-index: -1;
+            opacity: 0.2;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-tertiary-fixed-variant": "#00504c",
+                        "secondary-container": "#6063ee",
+                        "on-tertiary-container": "#f3fffd",
+                        "on-secondary-container": "#fffbff",
+                        "surface-tint": "#bb162c",
+                        "primary-fixed": "#ffdad8",
+                        "surface-variant": "#e5e2e1",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-container": "#fffbff",
+                        "surface-container-high": "#eae7e7",
+                        "inverse-primary": "#ffb3b1",
+                        "surface": "#fcf9f8",
+                        "tertiary-fixed-dim": "#71d7cf",
+                        "secondary-fixed": "#e1e0ff",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-fixed": "#410007",
+                        "inverse-on-surface": "#f3f0ef",
+                        "primary": "#b7122a",
+                        "on-primary": "#ffffff",
+                        "surface-bright": "#fcf9f8",
+                        "tertiary-fixed": "#8ef4eb",
+                        "on-error-container": "#93000a",
+                        "surface-container-highest": "#e5e2e1",
+                        "primary-fixed-dim": "#ffb3b1",
+                        "on-surface-variant": "#5b403f",
+                        "outline": "#8f6f6e",
+                        "on-primary-fixed-variant": "#92001c",
+                        "on-surface": "#1b1b1b",
+                        "on-secondary-fixed-variant": "#2f2ebe",
+                        "error": "#ba1a1a",
+                        "secondary-fixed-dim": "#c0c1ff",
+                        "secondary": "#4648d4",
+                        "tertiary-container": "#00837c",
+                        "background": "#fcf9f8",
+                        "surface-dim": "#dcd9d9",
+                        "on-secondary-fixed": "#07006c",
+                        "outline-variant": "#e4bebc",
+                        "on-secondary": "#ffffff",
+                        "inverse-surface": "#313030",
+                        "on-background": "#1b1b1b",
+                        "on-tertiary-fixed": "#00201e",
+                        "surface-container": "#f0eded",
+                        "surface-container-low": "#f6f3f2",
+                        "error-container": "#ffdad6",
+                        "primary-container": "#db313f",
+                        "on-error": "#ffffff",
+                        "tertiary": "#006762"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "md": "16px",
+                        "base": "8px",
+                        "margin-desktop": "48px",
+                        "gutter": "24px",
+                        "xl": "32px",
+                        "max-width": "1280px",
+                        "xs": "4px",
+                        "margin-mobile": "16px",
+                        "sm": "8px",
+                        "lg": "24px"
+                    },
+                    "fontFamily": {
+                        "body-sm": ["Inter"],
+                        "headline-lg": ["DM Sans"],
+                        "body-md": ["Inter"],
+                        "headline-md": ["DM Sans"],
+                        "label-md": ["Inter"],
+                        "display-lg": ["DM Sans"],
+                        "headline-sm": ["DM Sans"],
+                        "body-lg": ["Inter"],
+                        "label-lg": ["Inter"],
+                        "headline-lg-mobile": ["DM Sans"]
+                    },
+                    "fontSize": {
+                        "body-sm": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}],
+                        "headline-md": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                        "label-md": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                        "display-lg": ["48px", {"lineHeight": "56px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-sm": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                        "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "headline-lg-mobile": ["28px", {"lineHeight": "34px", "fontWeight": "700"}]
+                    }
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-md overflow-x-hidden">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 shadow-sm bg-surface dark:bg-surface-dim">
+<div class="flex justify-between items-center px-margin-desktop h-20 w-full max-w-max-width mx-auto">
+<div class="text-headline-md font-headline-md font-bold text-primary dark:text-primary-fixed-dim">
+                Zomato AI
+            </div>
+<nav class="hidden md:flex items-center gap-xl">
+<a class="text-primary dark:text-primary-fixed-dim border-b-2 border-primary pb-1 font-label-lg text-label-lg transition-colors" href="#">Discover</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-lg text-label-lg" href="#">My Matches</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-lg text-label-lg" href="#">History</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors font-label-lg text-label-lg" href="#">Collections</a>
+</nav>
+<div class="flex items-center gap-md">
+<button class="font-label-lg text-label-lg text-primary hover:opacity-80 transition-opacity">Sign In</button>
+<div class="w-10 h-10 rounded-full bg-surface-container overflow-hidden border border-outline-variant">
+<img alt="User profile photo" class="w-full h-full object-cover" data-alt="A professional studio headshot of a smiling user against a clean, neutral background. The lighting is soft and flattering, emphasizing a modern and friendly corporate persona. The image is crisp, with natural skin tones and a shallow depth of field, reflecting a high-quality service interface aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBqdzeZo_TwZ0beGonpqJDOlBpNvoomD91SwqRz7bsImxTmn3zGQulxjxA67pI_mk-u44Wh_29E49iFqdR2UPczUNvXzwOWnILKqniok98UVmo4SY_vEhEc7EdrLEVzQu7wr5mJwPVdIz780gNRnXeKp5JP8LgTMO9bo0vadcHmTrqjlsSa4dkO7rASc158nYW4t0QjUSt7ppVoz1J8-R9BYia_K8ZfXUEvCm5Vzwzv-vpZTlrIc--oWbuxg_cZHHZDeoiwVh6r8RsQ"/>
+</div>
+</div>
+</div>
+</header>
+<main class="pt-32 pb-20 px-margin-desktop max-w-max-width mx-auto min-h-screen">
+<!-- Hero Section -->
+<section class="text-center mb-xl">
+<h1 class="font-display-lg text-display-lg text-on-surface mb-base">
+                Personalized picks from real Zomato data
+            </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-2xl mx-auto">
+                Our AI Concierge analyzes millions of reviews and restaurant data points to find your perfect dining match.
+            </p>
+</section>
+<!-- Main Content Layout -->
+<div class="flex flex-col lg:flex-row gap-gutter">
+<!-- Preferences Form Container -->
+<div class="flex-1">
+<div class="bg-surface-container-lowest rounded-xl shadow-[0px_4px_12px_rgba(0,0,0,0.05)] p-xl border border-outline-variant/30">
+<div class="flex items-center gap-base mb-lg">
+<span class="material-symbols-outlined text-primary" data-icon="restaurant_menu">restaurant_menu</span>
+<h2 class="font-headline-sm text-headline-sm text-on-surface">Dining Preferences</h2>
+</div>
+<form class="space-y-lg">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-lg">
+<!-- Location -->
+<div class="space-y-xs">
+<label class="font-label-lg text-label-lg text-on-surface-variant px-xs">Location</label>
+<div class="relative">
+<select class="w-full h-12 px-md bg-surface border border-outline-variant rounded-lg appearance-none focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 transition-all font-body-md">
+<option>Mumbai, India</option>
+<option>New Delhi, India</option>
+<option>Bangalore, India</option>
+<option>London, UK</option>
+</select>
+<span class="material-symbols-outlined absolute right-md top-3 text-on-surface-variant pointer-events-none" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+<!-- Cuisine -->
+<div class="space-y-xs">
+<label class="font-label-lg text-label-lg text-on-surface-variant px-xs">Cuisine</label>
+<div class="relative">
+<input class="w-full h-12 px-md bg-surface border border-outline-variant rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 transition-all font-body-md" placeholder="Italian, Sushi, North Indian..." type="text"/>
+<span class="material-symbols-outlined absolute right-md top-3 text-on-surface-variant" data-icon="search">search</span>
+</div>
+</div>
+</div>
+<!-- Budget Segmented Control -->
+<div class="space-y-xs">
+<label class="font-label-lg text-label-lg text-on-surface-variant px-xs">Budget Range</label>
+<div class="flex p-1 bg-surface-container-low rounded-xl border border-outline-variant/50">
+<button class="flex-1 py-3 px-md text-center rounded-lg bg-surface-container-lowest shadow-sm text-primary font-label-lg transition-all" onclick="selectSegment(this)" type="button">Low</button>
+<button class="flex-1 py-3 px-md text-center rounded-lg text-on-surface-variant font-label-lg hover:bg-surface-container transition-all" onclick="selectSegment(this)" type="button">Medium</button>
+<button class="flex-1 py-3 px-md text-center rounded-lg text-on-surface-variant font-label-lg hover:bg-surface-container transition-all" onclick="selectSegment(this)" type="button">High</button>
+</div>
+</div>
+<!-- Rating Slider -->
+<div class="space-y-md">
+<div class="flex justify-between items-center px-xs">
+<label class="font-label-lg text-label-lg text-on-surface-variant">Minimum Rating</label>
+<span class="font-label-lg text-label-lg text-primary" id="ratingValue">4.0+ Stars</span>
+</div>
+<input class="w-full h-2 bg-surface-container-high rounded-lg appearance-none cursor-pointer custom-slider" max="5" min="1" oninput="updateRating(this.value)" step="0.1" type="range" value="4.0"/>
+<div class="flex justify-between px-xs text-label-md text-on-surface-variant">
+<span>1.0</span>
+<span>2.0</span>
+<span>3.0</span>
+<span>4.0</span>
+<span>5.0</span>
+</div>
+</div>
+<!-- Additional Preferences -->
+<div class="space-y-xs">
+<label class="font-label-lg text-label-lg text-on-surface-variant px-xs">Additional Preferences</label>
+<textarea class="w-full p-md bg-surface border border-outline-variant rounded-lg focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary/20 transition-all font-body-md" placeholder="e.g. Pet friendly, quiet atmosphere, valet parking, rooftop seating..." rows="3"></textarea>
+</div>
+<!-- Submit Button -->
+<button class="w-full py-4 bg-primary text-on-primary rounded-xl font-headline-sm flex items-center justify-center gap-base hover:opacity-90 active:scale-[0.98] transition-all shadow-md mt-lg" type="button">
+<span class="material-symbols-outlined" data-icon="auto_awesome">auto_awesome</span>
+                            Generate Recommendation
+                        </button>
+</form>
+</div>
+</div>
+<!-- Sidebar / Status Column -->
+<div class="w-full lg:w-80 space-y-gutter">
+<!-- Setup Status Card -->
+<div class="bg-surface-container-low rounded-xl p-lg border border-outline-variant/30 flex flex-col gap-md">
+<div class="flex justify-between items-start">
+<div class="p-base bg-tertiary-container rounded-lg">
+<span class="material-symbols-outlined text-on-tertiary-container" data-icon="key">key</span>
+</div>
+<span class="px-base py-1 bg-on-tertiary-fixed-variant/10 text-on-tertiary-fixed-variant rounded-full text-label-md font-label-md">Active</span>
+</div>
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Setup Status</h3>
+<p class="font-body-sm text-body-sm text-on-surface-variant mt-xs">All systems operational. Your personalized engine is ready.</p>
+</div>
+<div class="flex items-center gap-sm text-on-tertiary-fixed-variant font-label-lg">
+<span class="material-symbols-outlined text-[18px]" data-icon="check_circle" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                        API key configured
+                    </div>
+<button class="w-full py-2 border border-outline text-on-surface-variant rounded-lg font-label-lg hover:bg-surface-container transition-all">
+                        Manage API Keys
+                    </button>
+</div>
+<!-- AI Insight Card -->
+<div class="gradient-ai-border p-lg flex flex-col gap-md shadow-sm">
+<div class="flex items-center gap-sm">
+<span class="material-symbols-outlined text-secondary" data-icon="bolt">bolt</span>
+<h4 class="font-label-lg text-label-lg text-secondary uppercase tracking-widest">AI Concierge Tips</h4>
+</div>
+<p class="font-body-sm text-body-sm text-on-surface-variant">
+                        "Italian" is trending in Mumbai today. Users are currently loving coastal-inspired pastas.
+                    </p>
+<div class="h-[1px] bg-outline-variant/30 w-full"></div>
+<div class="flex items-center gap-md">
+<div class="w-8 h-8 rounded-full bg-primary-container/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-primary text-[16px]" data-icon="trending_up">trending_up</span>
+</div>
+<span class="text-label-md font-label-md text-on-surface">98% Match accuracy</span>
+</div>
+</div>
+<!-- Featured Image Card -->
+<div class="rounded-xl overflow-hidden shadow-sm relative group cursor-pointer">
+<img alt="Elegant dining atmosphere" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500" data-alt="A sophisticated fine-dining restaurant interior with warm, ambient lighting. The scene features elegantly set tables with crisp white linens, crystal glassware, and polished silverware. In the background, a modern open kitchen emits a soft glow, while the overall aesthetic is one of luxury, comfort, and culinary excellence, perfectly matching a premium AI-driven brand." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC_GgsvmXzBW7wzt6RjifgnxxcPlzGtSOuqYxIMWxcE4ds2sopQTwa5K_FMwqdlvL-pk41qd1KODJP9Rv3bFVKOQhTueuVSX538FG-hlLugiRIZsiLamkcfn11Eg1z2LHLccGAEwZAYFDiSzEYjmjDRgc_P6j3BHaBZnfmACWxnUJojH0RP7G9OIlsT5P7L5lUfOLPSECBnJl-Dvhtej3QajSt-gUJSrAhWC2z2kYjT8G_2CJfjGWw6-Bn7fWpeNccDP1F-3akdgpCl"/>
+<div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent flex items-end p-md">
+<span class="text-white font-label-lg">Discover Trending Spots</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Horizontal Scroll Section -->
+<section class="mt-xl">
+<div class="flex justify-between items-center mb-lg">
+<h3 class="font-headline-sm text-headline-sm">Curated Collections</h3>
+<a class="text-primary font-label-lg hover:underline flex items-center gap-xs" href="#">
+                    View all <span class="material-symbols-outlined text-[18px]" data-icon="arrow_forward">arrow_forward</span>
+</a>
+</div>
+<div class="flex gap-gutter overflow-x-auto pb-lg no-scrollbar">
+<!-- Collection Card 1 -->
+<div class="min-w-[280px] bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm border border-outline-variant/20">
+<div class="h-40 bg-surface-container relative">
+<img alt="Gourmet Breakfast" class="w-full h-full object-cover" data-alt="A vibrant, high-key photograph of a gourmet breakfast spread featuring avocado toast, fresh berries, and artisanal coffee. The lighting is bright and airy, typical of a modern brunch setting. The colors are rich and appetizing, with a focus on fresh greens and deep reds, maintaining a clean and premium visual identity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAZhZyXT1nRxtAiLRSGN12ObKoED7Y5_v2677HgJ0_e7TDNB0Il5j7-ui0mbhlm0KrVGDLSccLA6cG32AFJk28dSPcVxl4-bltFb7UQtqz8G07QR2d-Wew9dHUNhGDb_jpHGxIfshpnvMom4O1SOC7Jp1YBzkUMjLcSnaNfWBMcnB-RMd5hIG6C8BAHDozP8Noep-wSmPrvQ-SDYOQFHqw89kYDahBOFEMVKMYATgsUNawwWHdPJSwqGRHTNoHmzXL57J0c5xzi804c"/>
+<div class="absolute top-md right-md px-base py-xs bg-white/90 backdrop-blur rounded-full shadow-sm text-label-md font-bold text-primary">
+                            12 Places
+                        </div>
+</div>
+<div class="p-md">
+<h4 class="font-headline-sm text-on-surface mb-xs">Perfect Brunch</h4>
+<p class="font-body-sm text-on-surface-variant">Top-rated morning spots.</p>
+</div>
+</div>
+<!-- Collection Card 2 -->
+<div class="min-w-[280px] bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm border border-outline-variant/20">
+<div class="h-40 bg-surface-container relative">
+<img alt="Sushi Platter" class="w-full h-full object-cover" data-alt="A minimalist and high-end sushi platter presented on a dark slate board. The lighting is focused and dramatic, highlighting the texture of the fresh salmon and tuna. The composition is clean and precise, echoing the AI-driven accuracy and sophisticated culinary focus of the brand's premium service." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBfNvgEzW9ffm0gjrBNXVCjA5PrZ-GKtqrpV_8zMFqMD1eKCWSc-UPDIMRnQdluVMNE62ibV098-4GL9awgENPhbN7dRZFeUtLjlrGisKjL-ZoY4AmZu7Pw0x3drEGshfWBFLIt9iCSZLw7fI_xlc5rtliAazCXT21fzWBYmg3EhrINJygNmHkJuxDWHFdaKedPclpZutUVx4pEvPsqyjeACbfF9jvcYpPnZeEn9A_D6ZbpHBphR-T2iwi8i_B1uUuOwVbrbCidMm5e"/>
+<div class="absolute top-md right-md px-base py-xs bg-white/90 backdrop-blur rounded-full shadow-sm text-label-md font-bold text-primary">
+                            8 Places
+                        </div>
+</div>
+<div class="p-md">
+<h4 class="font-headline-sm text-on-surface mb-xs">Authentic Sushi</h4>
+<p class="font-body-sm text-on-surface-variant">Expertly rolled precision.</p>
+</div>
+</div>
+<!-- Collection Card 3 -->
+<div class="min-w-[280px] bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm border border-outline-variant/20">
+<div class="h-40 bg-surface-container relative">
+<img alt="Cocktail bar" class="w-full h-full object-cover" data-alt="A moody and atmospheric photograph of a high-end cocktail bar. Warm golden lighting reflects off crystal decanters and polished wood. The background is softly blurred to emphasize the sophisticated evening ambiance. The scene conveys a sense of modern nightlife and intelligent social curation." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAYY6KbkA8obiK-JAVRRJhpQtCkibAhhSp_v4w-UNQFvWridClMUe4HLlLSMAm3aJtjqe_RJO2qH0S7VqXN1IGUJ6ZDv0oWZ7biPwTlMOnXPG8CfT1zL_UdZ4PPLDi7OqUR4DUCTb9jFELEXaskZMpYLo_m7ZhrSz1XvlYUeFOyYwUTWBzT28t6NGvVF-XS2gd6UeDUU5UqK7bfJyFOQxEh4rbBQ8Gg4Kr-hAqMkgTqWa_3N_7IGsISpLmh9uAUuiXWSQpCMUJ7_Vol"/>
+<div class="absolute top-md right-md px-base py-xs bg-white/90 backdrop-blur rounded-full shadow-sm text-label-md font-bold text-primary">
+                            15 Places
+                        </div>
+</div>
+<div class="p-md">
+<h4 class="font-headline-sm text-on-surface mb-xs">Hidden Gems</h4>
+<p class="font-body-sm text-on-surface-variant">Speakeasies and secret bars.</p>
+</div>
+</div>
+<!-- Collection Card 4 -->
+<div class="min-w-[280px] bg-surface-container-lowest rounded-xl overflow-hidden shadow-sm border border-outline-variant/20">
+<div class="h-40 bg-surface-container relative">
+<img alt="Artisanal Pizza" class="w-full h-full object-cover" data-alt="A close-up of an artisanal Neapolitan pizza with fresh basil and bubbling mozzarella. The lighting is warm and visceral, capturing the steam and the charred texture of the crust. This high-impact food photography is designed to trigger an emotional, appetizing response while fitting within a clean digital interface." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAlnKX_1q8rlnLws-Dy4nSwgcgYkEhvE_AwCWqwMzuY6873PdfLXUn13-ocEAVmb96nCjlwY8Nous4oM5Qsw0Az-h7ei0r4Nx_2koeoMksTLEaii6mSCrGJF8vz6tdYCDrp2a3_G5sSs_fMfUyQt_GSc3gXRsOmrAluMshmBL88HlOv6elToDL0-FjU1BeAN39-aa84oKQ0mBB7ibL0YiuQCeI0QCldSJbfvI-lXN7QO_emi1cF1G9ZhgdKIGt_VF6gATl4swbCAuze"/>
+<div class="absolute top-md right-md px-base py-xs bg-white/90 backdrop-blur rounded-full shadow-sm text-label-md font-bold text-primary">
+                            20 Places
+                        </div>
+</div>
+<div class="p-md">
+<h4 class="font-headline-sm text-on-surface mb-xs">Pizza Paradise</h4>
+<p class="font-body-sm text-on-surface-variant">Wood-fired perfection.</p>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full bottom-0 bg-surface-container-highest dark:bg-inverse-surface mt-xl border-t border-outline-variant">
+<div class="flex flex-col items-center py-xl px-margin-desktop w-full max-w-max-width mx-auto">
+<div class="font-headline-sm text-headline-sm font-bold text-primary mb-lg">
+                Zomato AI
+            </div>
+<div class="flex flex-wrap justify-center gap-xl mb-xl">
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:underline transition-all" href="#">Privacy Policy</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:underline transition-all" href="#">Terms of Service</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:underline transition-all" href="#">Cookie Preferences</a>
+<a class="font-body-sm text-body-sm text-on-surface-variant hover:underline transition-all" href="#">Restaurant Partner Login</a>
+</div>
+<div class="font-body-sm text-body-sm text-on-surface-variant">
+                © 2024 Zomato AI Concierge. Powered by Gastronomic Intelligence.
+            </div>
+</div>
+</footer>
+<script>
+        function selectSegment(element) {
+            const buttons = element.parentElement.querySelectorAll('button');
+            buttons.forEach(btn => {
+                btn.classList.remove('bg-surface-container-lowest', 'shadow-sm', 'text-primary');
+                btn.classList.add('text-on-surface-variant', 'hover:bg-surface-container');
+            });
+            element.classList.add('bg-surface-container-lowest', 'shadow-sm', 'text-primary');
+            element.classList.remove('text-on-surface-variant', 'hover:bg-surface-container');
+        }
+
+        function updateRating(val) {
+            document.getElementById('ratingValue').innerText = val + '+ Stars';
+        }
+
+        // Lightweight entrance animations
+        document.addEventListener('DOMContentLoaded', () => {
+            const cards = document.querySelectorAll('.bg-surface-container-lowest, .bg-surface-container-low, .gradient-ai-border');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'all 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
+                setTimeout(() => {
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 100 * index);
+            });
+        });
+    </script>
+</body></html>

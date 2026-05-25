@@ -1,0 +1,20 @@
+# Phase 0–1: data pipeline
+datasets>=2.18.0
+pandas>=2.1.0
+pyarrow>=14.0.0
+pydantic>=2.5.0
+pydantic-settings>=2.1.0
+python-dotenv>=1.0.0
+
+# Phase 3+ (Groq LLM)
+groq>=0.11.0
+
+# Phase 5
+streamlit>=1.29.0
+
+# API (Next.js frontend)
+fastapi>=0.110.0
+uvicorn[standard]>=0.27.0
+
+# Dev / tests
+pytest>=7.4.0
