@@ -125,3 +125,39 @@ pytest tests/ -v
 ## Configuration
 
 See `.env.example` for `DATA_CACHE_PATH`, `HF_DATASET_ID`, `DATA_METRO_FILTER` (default `Bangalore`), and LLM settings.
+
+## Production Deployment Guide
+
+This project is optimized for deployment to production platforms like **Heroku**, **Render**, or **Streamlit Community Cloud**.
+
+### 1. Pre-built Parquet Dataset Strategy (Zero Cold-Start Downloads)
+To avoid downloading a massive **574 MB** dataset from Hugging Face at server startup (which will trigger platform startup timeouts and cold-start latency), this repository is configured to track processed Parquet files directly in Git:
+* The pre-processed Parquet files are tiny (~582 KB).
+* They are tracked in Git via updated `.gitignore` rules.
+* On startup, the server automatically reads the pre-built files (`data/processed/restaurants.parquet` and `data/processed/budget_bands.parquet`) instantly, ensuring an immediate startup time.
+
+### 2. Environment Variables Configuration
+Configure the following environment variables in your deployment platform's Secrets or Config Vars:
+
+| Variable | Description | Example |
+|----------|-------------|---------|
+| `GROQ_API_KEY` | Your live Groq API key | `gsk_...` |
+| `LLM_PROVIDER` | AI provider (defaults to `groq`) | `groq` |
+| `CORS_ORIGINS` | Allowed frontend origins (comma-separated) | `https://zomato-ai-frontend.vercel.app` |
+| `NEXT_PUBLIC_API_URL` | Frontend env mapping to the backend API URL | `https://zomato-ai-backend.onrender.com` |
+
+### 3. Deploying the Backend API (FastAPI)
+Deploy the root repository to a backend service provider (like Heroku or Render):
+* **Build Command:** `pip install -r requirements.txt`
+* **Start Command:** The `Procfile` is pre-configured to run the optimized startup command:
+  ```bash
+  python scripts/download_dataset.py && uvicorn src.api.main:app --host 0.0.0.0 --port $PORT
+  ```
+  *(Without the `--force` flag, it boots instantly by using the pre-built Git-tracked Parquet file.)*
+
+### 4. Deploying the Frontend (Next.js)
+Deploy the `/frontend` directory to **Vercel** or **Netlify**:
+* **Root Directory:** `frontend`
+* **Build Command:** `npm run build`
+* **Start Command:** `npm run start`
+* **Environment Variables:** Set `NEXT_PUBLIC_API_URL` pointing to your deployed FastAPI backend URL.

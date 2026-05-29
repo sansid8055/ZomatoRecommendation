@@ -26,14 +26,14 @@ _orchestrator: RecommendationOrchestrator | None = None
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     global _repository, _orchestrator
-    settings = get_settings()
-    if not settings.data_cache_path.exists():
-        logger.warning("Dataset not found at %s", settings.data_cache_path)
-    else:
+    try:
         _repository = RestaurantRepository()
+        # repo.load() will automatically fetch from Hugging Face if the Parquet cache is missing
         _repository.load()
         _orchestrator = RecommendationOrchestrator(repository=_repository)
         logger.info("API ready: %s locations loaded", len(_repository.get_available_locations()))
+    except Exception as e:
+        logger.error("Failed to load restaurant repository during startup: %s", e)
     yield
     _repository = None
     _orchestrator = None
